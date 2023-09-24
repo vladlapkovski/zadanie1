@@ -52,7 +52,7 @@ exports.app.delete("/hometask_01/api/videos/:videoId", (req, res) => {
     }
     return res.status(404).send();
 });
-exports.app.delete("/hometask_01/api/testing/all-data", (req, res) => {
+exports.app.delete("/testing/all-data", (req, res) => {
     videos.length = 0;
     return res.status(204).send();
 });
