@@ -163,27 +163,26 @@ app.post("/hometask_01/api/videos", (req: Request, res: Response) => {
     !req.body.availableResolutions.every((r: Resolution) =>
       resolution.includes(r)
     )
-  ) {return res.status(400).send("Invalid available resolutions");
-}
+  ) {
+    return res.status(400).send("Invalid available resolutions");
+  }
 
-if (typeof req.body.canBeDownloaded !== "boolean") {
-  return res.status(400).send("Invalid canBeDownloaded");
-}
+  const newVideo: Videos = {
+    id: videos.length + 1,
+    title: req.body.title,
+    author: req.body.author,
+    canBeDownloaded: req.body.canBeDownloaded || false,
+    minAgeRestriction:
+      req.body.minAgeRestriction !== undefined ? req.body.minAgeRestriction : null,
+    createdAt: req.body.createdAt || new Date().toISOString(),
+    publicationDate:
+      req.body.publicationDate || new Date(Date.now() + 86400000).toISOString(),
+    availableResolutions: req.body.availableResolutions,
+  };
 
-const newVideo: Videos = {
-  id: videos.length + 1,
-  title: req.body.title,
-  author: req.body.author,
-  canBeDownloaded: req.body.canBeDownloaded,
-  minAgeRestriction: req.body.minAgeRestriction,
-  createdAt: new Date().toISOString(),
-  publicationDate: new Date(Date.now() + 86400000).toISOString(),
-  availableResolutions: req.body.availableResolutions,
-};
+  videos.push(newVideo);
 
-videos.push(newVideo);
-
-return res.status(201).send(newVideo);
+  return res.status(201).send(newVideo);
 });
 
 app.listen(3000, () => {
