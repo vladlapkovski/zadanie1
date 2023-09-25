@@ -16,27 +16,27 @@ interface Videos {
 }
 
 const videos: Videos[] = [
-  {
-    id: 1, 
-    title: "nigth show", 
-    author: "dimych", 
-    canBeDownloaded: true, 
-    minAgeRestriction: null,
-    createdAt: new Date().toISOString(), 
-    publicationDate: new Date(Date.now() + 86400000).toISOString(), 
-    availableResolutions: ["P144"]
-  }, 
+  // {
+  //   id: 1, 
+  //   title: "nigth show", 
+  //   author: "dimych", 
+  //   canBeDownloaded: true, 
+  //   minAgeRestriction: null,
+  //   createdAt: new Date().toISOString(), 
+  //   publicationDate: new Date(Date.now() + 86400000).toISOString(), 
+  //   availableResolutions: ["P144"]
+  // }, 
 
-  {
-    id: 2, 
-    title: "kuchna", 
-    author: "kto-to", 
-    canBeDownloaded: true, 
-    minAgeRestriction: null, 
-    createdAt: new Date().toISOString(), 
-    publicationDate: new Date(Date.now() + 86400000).toISOString(), 
-    availableResolutions: ["P144"]
-  }
+  // {
+  //   id: 2, 
+  //   title: "kuchna", 
+  //   author: "kto-to", 
+  //   canBeDownloaded: true, 
+  //   minAgeRestriction: null, 
+  //   createdAt: new Date().toISOString(), 
+  //   publicationDate: new Date(Date.now() + 86400000).toISOString(), 
+  //   availableResolutions: ["P144"]
+  // }
 ]
 
 
