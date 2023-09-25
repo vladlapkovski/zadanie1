@@ -3,9 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.app = void 0;
 const express_1 = __importDefault(require("express"));
-exports.app = (0, express_1.default)();
+const app = (0, express_1.default)();
 let resolution = ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"];
 const videos = [
     {
@@ -30,19 +29,19 @@ const videos = [
     }
 ];
 const parserMiddleware = express_1.default.json();
-exports.app.use(parserMiddleware);
-exports.app.get("/hometask_01/api/videos", (req, res) => {
+app.use(parserMiddleware);
+app.get("/hometask_01/api/videos", (req, res) => {
     res.status(200).send(videos);
     return;
 });
-exports.app.get("/hometask_01/api/videos/:videoId", (req, res) => {
+app.get("/hometask_01/api/videos/:videoId", (req, res) => {
     let video = videos.find(v => v.id === +req.params.videoId);
     if (!video) {
         return res.status(404).send();
     }
     return res.status(200).send(video);
 });
-exports.app.delete("/hometask_01/api/videos/:videoId", (req, res) => {
+app.delete("/hometask_01/api/videos/:videoId", (req, res) => {
     for (let i = 0; i < videos.length; i++) {
         if (videos[i].id === +req.params.videoId) {
             videos.splice(i, 1);
@@ -52,11 +51,11 @@ exports.app.delete("/hometask_01/api/videos/:videoId", (req, res) => {
     }
     return res.status(404).send();
 });
-exports.app.delete("/testing/all-data", (req, res) => {
+app.delete("/testing/all-data", (req, res) => {
     videos.length = 0;
     return res.status(204).send();
 });
-exports.app.post('/hometask_01/api/videos', (req, res) => {
+app.post('/hometask_01/api/videos', (req, res) => {
     const { title, author, availableResolutions, canBeDownloaded = false, minAgeRestriction = null, createdAt = new Date().toISOString(), publicationDate = new Date(Date.now() + 86400000).toISOString() } = req.body;
     // Check for required fields
     if (!title || !author) {
@@ -119,9 +118,14 @@ exports.app.post('/hometask_01/api/videos', (req, res) => {
     videos.push(newVideo);
     res.status(201).json({ video: newVideo });
 });
-exports.app.put("/hometask_01/api/videos/:videoId", (req, res) => {
+app.put("/hometask_01/api/videos/:videoId", (req, res) => {
     let video = videos.find(v => v.id === +req.params.videoId);
-    if (req.body.title.length > 40 || req.body.author.length > 20 || req.body.availableResolutions.length < 1 || !req.body.availableResolutions.every((r) => resolution.includes(r)) || typeof (req.body.canBeDownloaded) !== "boolean" || req.body.minAgeRestriction < 1 || req.body.minAgeRestriction > 18) {
+    if (req.body.title.length > 40 ||
+        req.body.author.length > 20 ||
+        req.body.availableResolutions.length < 1 ||
+        !req.body.availableResolutions.every((r) => resolution.includes(r)) ||
+        typeof (req.body.canBeDownloaded) !== "boolean" ||
+        req.body.minAgeRestriction < 1 || req.body.minAgeRestriction > 18) {
         res.status(400).send();
         return;
     }
@@ -136,4 +140,8 @@ exports.app.put("/hometask_01/api/videos/:videoId", (req, res) => {
         video.minAgeRestriction = req.body.minAgeRestriction,
         video.publicationDate = new Date(Date.now() + 86400000).toISOString();
     return res.status(204).send(video);
+});
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`app listening on port: ${port}`);
 });

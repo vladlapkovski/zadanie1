@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express"
 
-export const app = express()
+ const app = express()
 
 let resolution = ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"]
 
@@ -161,7 +161,12 @@ app.post('/hometask_01/api/videos', (req: Request, res: Response) => {
 app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
   let video = videos.find(v => v.id === +req.params.videoId)
 
-  if (req.body.title.length > 40 || req.body.author.length > 20 || req.body.availableResolutions.length < 1 || !req.body.availableResolutions.every((r: string) => resolution.includes(r)) || typeof(req.body.canBeDownloaded) !== "boolean" || req.body.minAgeRestriction < 1 || req.body.minAgeRestriction > 18) {
+  if (req.body.title.length > 40 ||
+     req.body.author.length > 20 || 
+     req.body.availableResolutions.length < 1 || 
+     !req.body.availableResolutions.every((r: string) => resolution.includes(r)) || 
+     typeof(req.body.canBeDownloaded) !== "boolean" || 
+     req.body.minAgeRestriction < 1 || req.body.minAgeRestriction > 18) {
     res.status(400).send()
     return
   } 
@@ -180,4 +185,11 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
   video.publicationDate = new Date(Date.now() + 86400000).toISOString()
   
   return res.status(204).send(video)
+})
+
+const port = process.env.PORT || 3000
+
+
+app.listen(port, () => {
+    console.log(`app listening on port: ${port}`)
 })

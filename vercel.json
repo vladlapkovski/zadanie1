@@ -1,10 +1,10 @@
 {
     "version": 2,
-    "name": "homework",
+    "name": "zadanie1",
     "builds": [
-       { "src": "src/homework.ts", "use": "@vercel/node" }
+       { "src": "src/app.ts", "use": "@vercel/node" }
     ],
     "routes": [
-       { "src": "/(.*)", "dest": "src/homework.ts" }
+       { "src": "/(.*)", "dest": "src/app.ts" }
     ]
  }

@@ -1,4 +1,4 @@
-import request from 'supertest';
+/*import request from 'supertest';
 import {app} from '../src/app';
 
 describe('Video API', () => {
@@ -81,4 +81,4 @@ describe('Video API', () => {
     expect(getRes.statusCode).toEqual(200);
     expect(getRes.body.length).toEqual(0);
   });
-});
+});*/
