@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express"
 
- const app = express()
+const app = express()
 
 let resolution = ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"]
 
@@ -153,7 +153,7 @@ app.post('/hometask_01/api/videos', (req: Request, res: Response) => {
   };
   videos.push(newVideo);
 
-  res.status(201).json({ video: newVideo });
+  return res.status(201).json({ video: newVideo });
 });
 
 
