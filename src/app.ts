@@ -167,7 +167,7 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
   video.availableResolutions = req.body.availableResolutions;
   video.canBeDownloaded = req.body.canBeDownloaded;
   video.minAgeRestriction = req.body.minAgeRestriction;
-  video.publicationDate = new Date(Date.now() + 86400000).toISOString();
+  video.publicationDate = req.body.publicationDate || new Date(Date.now() + 86400000).toISOString();
 
   return res.status(204).send(video);
 });
