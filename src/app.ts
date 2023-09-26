@@ -94,7 +94,14 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
     typeof req.body.title !== "string" ||
     req.body.title.length > 40
   ) {
-    return res.status(400).send("Invalid title");
+    return res.status(400).json({
+      errorsMessages: [
+        {
+          message: 'invalid title', 
+          field: "title"
+        }
+      ]
+    });
   }
 
   if (
@@ -102,7 +109,14 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
     typeof req.body.author !== "string" ||
     req.body.author.length > 20
   ) {
-    return res.status(400).send("Invalid author");
+    return res.status(400).json({
+      errorsMessages: [
+        {
+          message: 'Invalid author', 
+          field: "aurhor"
+        }
+      ]
+    });
   }
 
   if (
@@ -113,11 +127,25 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
       resolution.includes(r)
     )
   ) {
-    return res.status(400).send("Invalid available resolutions");
+    return res.status(400).json({
+      errorsMessages: [
+        {
+          message: 'Invalid resolutions', 
+          field: "availableResolutions"
+        }
+      ]
+    });
   }
 
   if (typeof req.body.canBeDownloaded !== "boolean") {
-    return res.status(400).send("Invalid canBeDownloaded");
+    return res.status(400).json({
+      errorsMessages: [
+        {
+          message: 'Invalid canBeDownloaded', 
+          field: "canBeDownloaded"
+        }
+      ]
+    });
   }
 
   if (
@@ -126,7 +154,14 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
       req.body.minAgeRestriction < 1 ||
       req.body.minAgeRestriction > 18)
   ) {
-    return res.status(400).send("Invalid minAgeRestriction");
+    return res.status(400).json({
+      errorsMessages: [
+        {
+          message: 'Invalid minAgeRestriction', 
+          field: "minAgeRestriction"
+        }
+      ]
+    });
   }
 
   video.title = req.body.title;
@@ -145,7 +180,14 @@ app.post("/hometask_01/api/videos", (req: Request, res: Response) => {
     typeof req.body.title !== "string" ||
     req.body.title.length > 40
   ) {
-    return res.status(400).send("Invalid title");
+    return res.status(400).json({
+      errorsMessages: [
+        {
+          message: 'invalid title', 
+          field: "title"
+        }
+      ]
+    });
   }
 
   if (
@@ -153,7 +195,14 @@ app.post("/hometask_01/api/videos", (req: Request, res: Response) => {
     typeof req.body.author !== "string" ||
     req.body.author.length > 20
   ) {
-    return res.status(400).send("Invalid author");
+    return res.status(400).json({
+      errorsMessages: [
+        {
+          message: 'Invalid author', 
+          field: "aurhor"
+        }
+      ]
+    });
   }
 
   if (
@@ -164,7 +213,14 @@ app.post("/hometask_01/api/videos", (req: Request, res: Response) => {
       resolution.includes(r)
     )
   ) {
-    return res.status(400).send("Invalid available resolutions");
+    return res.status(400).json({
+      errorsMessages: [
+        {
+          message: 'Invalid resolutions', 
+          field: "availableResolutions"
+        }
+      ]
+    });
   }
 
   const newVideo: Videos = {
@@ -173,10 +229,10 @@ app.post("/hometask_01/api/videos", (req: Request, res: Response) => {
     author: req.body.author,
     canBeDownloaded: req.body.canBeDownloaded || false,
     minAgeRestriction:
-      req.body.minAgeRestriction !== undefined ? req.body.minAgeRestriction : null,
+    req.body.minAgeRestriction !== undefined ? req.body.minAgeRestriction : null,
     createdAt: req.body.createdAt || new Date().toISOString(),
     publicationDate:
-      req.body.publicationDate || new Date(Date.now() + 86400000).toISOString(),
+    req.body.publicationDate || new Date(Date.now() + 86400000).toISOString(),
     availableResolutions: req.body.availableResolutions,
   };
 
