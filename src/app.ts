@@ -89,18 +89,16 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
     return res.status(404).send();
   }
 
+  const errors: any[] = [];
+
   if (
     !req.body.title ||
     typeof req.body.title !== "string" ||
     req.body.title.length > 40
   ) {
-    return res.status(400).json({
-      errorsMessages: [
-        {
-          message: 'invalid title', 
-          field: "title"
-        }
-      ]
+    errors.push({
+      message: "invalid title",
+      field: "title",
     });
   }
 
@@ -109,13 +107,9 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
     typeof req.body.author !== "string" ||
     req.body.author.length > 20
   ) {
-    return res.status(400).json({
-      errorsMessages: [
-        {
-          message: 'Invalid author', 
-          field: "aurhor"
-        }
-      ]
+    errors.push({
+      message: "Invalid author",
+      field: "author",
     });
   }
 
@@ -127,24 +121,16 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
       resolution.includes(r)
     )
   ) {
-    return res.status(400).json({
-      errorsMessages: [
-        {
-          message: 'Invalid resolutions', 
-          field: "availableResolutions"
-        }
-      ]
+    errors.push({
+      message: "Invalid resolutions",
+      field: "availableResolutions",
     });
   }
 
   if (typeof req.body.canBeDownloaded !== "boolean") {
-    return res.status(400).json({
-      errorsMessages: [
-        {
-          message: 'Invalid canBeDownloaded', 
-          field: "canBeDownloaded"
-        }
-      ]
+    errors.push({
+      message: "Invalid canBeDownloaded",
+      field: "canBeDownloaded",
     });
   }
 
@@ -154,13 +140,15 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
       req.body.minAgeRestriction < 1 ||
       req.body.minAgeRestriction > 18)
   ) {
+    errors.push({
+      message: "Invalid minAgeRestriction",
+      field: "minAgeRestriction",
+    });
+  }
+
+  if (errors.length > 0) {
     return res.status(400).json({
-      errorsMessages: [
-        {
-          message: 'Invalid minAgeRestriction', 
-          field: "minAgeRestriction"
-        }
-      ]
+      errorsMessages: errors,
     });
   }
 
