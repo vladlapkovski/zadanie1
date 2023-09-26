@@ -146,6 +146,16 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
     });
   }
 
+  if (
+    req.body.publicationDate &&
+    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(req.body.publicationDate)
+  ) {
+    errors.push({
+      message: "Invalid publicationDate format",
+      field: "publicationDate",
+    });
+  }
+
   if (errors.length > 0) {
     return res.status(400).json({
       errorsMessages: errors,
