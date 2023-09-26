@@ -175,51 +175,32 @@ app.put("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => {
 });
 
 app.post("/hometask_01/api/videos", (req: Request, res: Response) => {
-  if (
-    !req.body.title ||
-    typeof req.body.title !== "string" ||
-    req.body.title.length > 40
-  ) {
-    return res.status(400).json({
-      errorsMessages: [
-        {
-          message: 'invalid title', 
-          field: "title"
-        }
-      ]
+  const errors: any[] = [];
+
+  if (!req.body.title || typeof req.body.title !== "string" || req.body.title.length > 40) {
+    errors.push({
+      message: 'invalid title', 
+      field: "title"
     });
   }
 
-  if (
-    !req.body.author ||
-    typeof req.body.author !== "string" ||
-    req.body.author.length > 20
-  ) {
-    return res.status(400).json({
-      errorsMessages: [
-        {
-          message: 'Invalid author', 
-          field: "author"
-        }
-      ]
+  if (!req.body.author || typeof req.body.author !== "string" || req.body.author.length > 20) {
+    errors.push({
+      message: 'Invalid author', 
+      field: "author"
     });
   }
 
-  if (
-    !req.body.availableResolutions ||
-    !Array.isArray(req.body.availableResolutions) ||
-    req.body.availableResolutions.length < 1 ||
-    !req.body.availableResolutions.every((r: Resolution) =>
-      resolution.includes(r)
-    )
-  ) {
+  if (!req.body.availableResolutions || !Array.isArray(req.body.availableResolutions) || req.body.availableResolutions.length < 1 || !req.body.availableResolutions.every((r: Resolution) => resolution.includes(r))) {
+    errors.push({
+      message: 'Invalid resolutions', 
+      field: "availableResolutions"
+    });
+  }
+
+  if (errors.length > 0) {
     return res.status(400).json({
-      errorsMessages: [
-        {
-          message: 'Invalid resolutions', 
-          field: "availableResolutions"
-        }
-      ]
+      errorsMessages: errors
     });
   }
 
@@ -228,11 +209,9 @@ app.post("/hometask_01/api/videos", (req: Request, res: Response) => {
     title: req.body.title,
     author: req.body.author,
     canBeDownloaded: req.body.canBeDownloaded || false,
-    minAgeRestriction:
-    req.body.minAgeRestriction !== undefined ? req.body.minAgeRestriction : null,
+    minAgeRestriction: req.body.minAgeRestriction !== undefined ? req.body.minAgeRestriction : null,
     createdAt: req.body.createdAt || new Date().toISOString(),
-    publicationDate:
-    req.body.publicationDate || new Date(Date.now() + 86400000).toISOString(),
+    publicationDate: req.body.publicationDate || new Date(Date.now() + 86400000).toISOString(),
     availableResolutions: req.body.availableResolutions,
   };
 
