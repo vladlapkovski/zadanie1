@@ -199,7 +199,7 @@ app.post("/hometask_01/api/videos", (req: Request, res: Response) => {
       errorsMessages: [
         {
           message: 'Invalid author', 
-          field: "aurhor"
+          field: "author"
         }
       ]
     });
