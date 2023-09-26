@@ -77,7 +77,7 @@ app.delete("/hometask_01/api/videos/:videoId", (req: Request, res: Response) => 
   return res.status(404).send();
 });
 
-app.delete("/testing/all-data", (req: Request, res: Response) => {
+app.delete("/hometask_01/api/testing/all-data", (req: Request, res: Response) => {
   videos.length = 0;
   return res.status(204).send();
 });
